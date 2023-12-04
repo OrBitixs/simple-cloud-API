@@ -16,7 +16,7 @@ userpass = 'mysql+pymysql://' + username + ':' + password + '@'
 # keep this as is for a hosted website
 server  = 'database-1.c94axs45lkvi.eu-central-1.rds.amazonaws.com'
 # CHANGE to YOUR database name, with a slash added as shown
-dbname   = '/database-1'
+dbname   = ''
 # there is no socket
 
 
