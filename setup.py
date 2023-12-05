@@ -1,23 +1,14 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData, Table, Column, Uuid, String, Integer
+from sqlalchemy import MetaData, Table, Column, Uuid, String, Integer, create_engine
 
-db = SQLAlchemy()
-app = Flask(__name__)
 
 username = 'admin'
 password = 'password'
 userpass = 'mysql+pymysql://' + username + ':' + password + '@'
 server  = 'database-1.c94axs45lkvi.eu-central-1.rds.amazonaws.com'
-dbname   = ''
+dbname   = 'simpleDB'
 
-
-app.config['SQLALCHEMY_DATABASE_URI'] = userpass + server + dbname
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-# initialize the app with Flask-SQLAlchemy
-db.init_app(app)
+engine = create_engine(userpass+server)
 
 metadata = MetaData()
 
@@ -29,6 +20,7 @@ students = Table(
     Column("student_age", Integer)
 )
 
-metadata.create_all(db.engine)
+metadata.create_all(engine)
 
 print("sent?")
+

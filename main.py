@@ -10,7 +10,7 @@ username = 'admin'
 password = 'password'
 userpass = 'mysql+pymysql://' + username + ':' + password + '@'
 server  = 'database-1.c94axs45lkvi.eu-central-1.rds.amazonaws.com'
-dbname   = ''
+dbname   = 'simpleDB'
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = userpass + server + dbname
