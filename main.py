@@ -90,7 +90,7 @@ def putStudents():
     try:
         body = request.get_json()
         Students.query.filter(Students.student_id == uuid.UUID(body["student_id"])).update({"student_name": body["student_name"], "student_age": body["student_age"]})
-        # db.session.commit()
+        db.session.commit()
         return '<h1>Successfully updated.</h1>'
     except Exception as e:
         error_text = "<p>The error:<br>" + str(e) + "</p>"
