@@ -85,6 +85,18 @@ def deleteStudents():
         hed = '<h1>Something is broken.</h1>'
         return hed + error_text
 
+@app.put('/students')
+def putStudents():
+    try:
+        body = request.get_json()
+        Students.query.filter(Students.student_id == uuid.UUID(body["student_id"])).update({"student_name": body["student_name"]}).update({"student_age": body["student_age"]})
+        # db.session.commit()
+        return '<h1>Successfully updated.</h1>'
+    except Exception as e:
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
+
 
 if __name__ == '__main__':
     app.run(debug=True)
