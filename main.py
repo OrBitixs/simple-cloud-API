@@ -74,7 +74,7 @@ def postStudents():
         return hed + error_text
 
 @app.delete('/students')
-def postStudents():
+def deleteStudents():
     try:
         body = request.get_json()
         Students.query.filter(Students.student_id == body["student_id"]).delete()
