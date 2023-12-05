@@ -64,7 +64,8 @@ def postStudents():
         body = request.get_json()
         new_student = Students(student_id=body["student_id"], student_name=body["student_name"], student_age=body["student_name"])
         db.session.add(new_student)
-        return jsonify(new_student)
+        db.session.commit()
+        return '<h1>Successfully added.</h1>'
     except Exception as e:
         error_text = "<p>The error:<br>" + str(e) + "</p>"
         hed = '<h1>Something is broken.</h1>'
