@@ -1,3 +1,5 @@
+import uuid
+
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
@@ -62,7 +64,7 @@ def getStudent():
 def postStudents():
     try:
         body = request.get_json()
-        new_student = Students(student_id=body["student_id"], student_name=body["student_name"], student_age=body["student_name"])
+        new_student = Students(student_id=uuid.uuid1(), student_name=body["student_name"], student_age=body["student_name"])
         db.session.add(new_student)
         db.session.commit()
         return '<h1>Successfully added.</h1>'
