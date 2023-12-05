@@ -19,15 +19,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # initialize the app with Flask-SQLAlchemy
 db.init_app(app)
 
-if __name__=="__main__":
-    metadata = MetaData()
+metadata = MetaData()
 
-    students = Table(
-        "students",
-        metadata,
-        Column("student_id", Uuid, primary_key=True),
-        Column("student_name", String(24)),
-        Column("student_age", Integer)
-    )
+students = Table(
+    "students",
+    metadata,
+    Column("student_id", Uuid, primary_key=True),
+    Column("student_name", String(24)),
+    Column("student_age", Integer)
+)
 
-    metadata.create_all(db.engine)
+metadata.create_all(db.engine)
+
+print("sent?")
