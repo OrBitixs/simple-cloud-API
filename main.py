@@ -77,7 +77,7 @@ def postStudents():
 def deleteStudents():
     try:
         body = request.get_json()
-        Students.query.filter(Students.student_id == body["student_id"]).delete()
+        Students.query.filter(Students.student_id == int(body["student_id"], 16)).delete()
         db.session.commit()
         return '<h1>Successfully deleted.</h1>'
     except Exception as e:
