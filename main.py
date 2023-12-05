@@ -3,7 +3,7 @@ import uuid
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
-from sqlalchemy import Uuid, Integer, String
+from sqlalchemy import Uuid, Integer, String, delete
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -64,10 +64,22 @@ def getStudent():
 def postStudents():
     try:
         body = request.get_json()
-        new_student = Students(student_id=uuid.uuid1(), student_name=body["student_name"], student_age=body["student_name"])
+        new_student = Students(student_id=uuid.uuid1(), student_name=body["student_name"], student_age=body["student_age"])
         db.session.add(new_student)
         db.session.commit()
         return '<h1>Successfully added.</h1>'
+    except Exception as e:
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
+
+@app.delete('/students')
+def postStudents():
+    try:
+        body = request.get_json()
+        Students.query.filter(Students.student_id == body["student_id"]).delete()
+        db.session.commit()
+        return '<h1>Successfully deleted.</h1>'
     except Exception as e:
         error_text = "<p>The error:<br>" + str(e) + "</p>"
         hed = '<h1>Something is broken.</h1>'
