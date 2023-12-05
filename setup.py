@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, Table, Column, Uuid, String, Integer, create_engine
 
 

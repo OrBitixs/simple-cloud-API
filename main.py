@@ -1,7 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-import pymysql
 from sqlalchemy.sql import text
+from sqlalchemy import Uuid, Integer, String
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -23,9 +23,9 @@ db.init_app(app)
 
 class Students(db.Model):
     __tablename__ = 'students'
-    student_id = db.Column(db.Integer, primary_key=True)
-    student_name = db.Column(db.String(24))
-    student_age = db.Column(db.Integer)
+    student_id = db.Column(Uuid, primary_key=True)
+    student_name = db.Column(String(24))
+    student_age = db.Column(Integer)
 
 
 # this route will test the database connection - and nothing more
@@ -39,7 +39,7 @@ def testdb():
         hed = '<h1>Something is broken.</h1>'
         return hed + error_text
 
-@app.route('/students')
+@app.get('/students')
 def getStudent():
     try:
         students = Students.query.all()
@@ -58,6 +58,17 @@ def getStudent():
         hed = '<h1>Something is broken.</h1>'
         return hed + error_text
 
+@app.post('/students')
+def postStudents():
+    try:
+        body = request.get_json()
+        new_student = Students(student_id=body["student_id"], student_name=body["student_name"], student_age=body["student_name"])
+        db.session.add(new_student)
+        return jsonify(new_student)
+    except Exception as e:
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
 
 
 if __name__ == '__main__':
