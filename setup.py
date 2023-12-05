@@ -6,9 +6,9 @@ username = 'admin'
 password = 'password'
 userpass = 'mysql+pymysql://' + username + ':' + password + '@'
 server  = 'database-1.c94axs45lkvi.eu-central-1.rds.amazonaws.com'
-dbname   = 'simpleDB'
+dbname   = '/simpleDB'
 
-engine = create_engine(userpass+server)
+engine = create_engine(userpass+server+dbname)
 
 metadata = MetaData()
 
