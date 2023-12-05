@@ -21,6 +21,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db.init_app(app)
 
 
+class Students(db.Model):
+    __tablename__ = 'students'
+    student_id = db.Column(db.Integer, primary_key=True)
+    student_name = db.Column(db.String(24))
+    student_age = db.Column(db.Integer)
+
+
 # this route will test the database connection - and nothing more
 @app.route('/')
 def testdb():
@@ -35,7 +42,17 @@ def testdb():
 @app.route('/students')
 def getStudent():
     try:
-        return jsonify(db.metadata.tables["students"])
+        students = Students.query.all()
+
+        student_list = []
+        for student in students:
+            student_list.append({
+                'student_id': student.student_id,
+                'student_name': student.student_name,
+                'student_age': student.student_age
+            })
+
+        return jsonify(student_list)
     except Exception as e:
         error_text = "<p>The error:<br>" + str(e) + "</p>"
         hed = '<h1>Something is broken.</h1>'
